@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Members Only Club!</h1>
+<p>Members have the ability to see who is saying what, so sign up today!</p>
+<h2>Posts</h2>
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @posts.each do |post| %>
+      <p>
+      <% if user_signed_in? %>
+        <%= post.user.email %><br />
+        <%= post.message %>
+      <% else %>
+        <%= post.message %>
+      <% end %>
+      </p>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Post', new_post_path %>
+<% if user_signed_in? %>
+  <%= link_to 'Sign Out', destroy_user_session_path, method: :delete %>
+<% else %>
+  <%= link_to 'Log In', new_user_session_path %>
+  <%= link_to 'Sign Up', new_user_registration_path %>
+<% end %>
